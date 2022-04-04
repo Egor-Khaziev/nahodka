@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Number</title>
+    <link rel="icon" href="data:;base64,=">
+</head>
+
+<body>
+
+
+
+<input id="numberField" type="text">
+<input id="numberSend" onclick="loadNumbers()" type="button" value="Send">
+<br>
+<hr>
+результат: <span id="result">вывод результата</span>
+</hr>
+
+<script>
+
+function loadNumbers() {
+    // данные для отправки
+    const number = document.querySelector('#numberField').value;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:8080/front/test");
+
+    // обработчик получения ответа сервера
+    xhr.onload = () => {
+        if (xhr.status == 200) {
+            console.log(xhr.response);
+            var data = xhr.response;
+            load(data);
+        } else {
+            console.log("Server response: ", xhr.statusText);
+        }
+    };
+    xhr.send(number);     // отправляем значение user в методе send
+    };
+
+function load(data){
+    document.getElementById('result').innerHTML = data;
+}
+
+load();
+
+</script>
+
+</body>
+</html>
